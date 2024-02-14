@@ -10,7 +10,8 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
-          command: pip install pytest bottle
+          command: |
+            pip install pytest bottle webtest
       - run:
           name: Run tests
           command: pytest --junitxml=junit.xml || ((($? == 5)) && echo 'Did not find any tests to run.')
