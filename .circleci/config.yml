@@ -12,6 +12,16 @@ jobs:
           name: Install dependencies
           command: |
             pip install pytest bottle requests
+
+      # Allow outbound network connections
+      - run:
+          name: Allow Outbound Connections
+          command: |
+            sudo iptables -P OUTPUT ACCEPT
+            sudo iptables -A OUTPUT -d localhost -j ACCEPT
+            sudo iptables -A OUTPUT -p tcp --dport 8080 -j ACCEPT
+            sudo iptables -A OUTPUT -j DROP
+
       - run:
           name: Run tests
           command: pytest --junitxml=junit.xml || ((($? == 5)) && echo 'Did not find any tests to run.')
