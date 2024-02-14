@@ -10,6 +10,10 @@ jobs:
           command: |
             pip install bottle pytest requests
       - run:
+          name: Start Bottle application
+          command: python app.py  
+          background: true  
+      - run:
           name: Run tests
           command: |
             pytest test_app.py
